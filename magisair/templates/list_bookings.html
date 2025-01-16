@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    My Bookings
+{% endblock title %}
+{% block content %}
+    <div class="container mt-5" style="background-color: #f8f9fa; border-radius: 15px; padding: 20px;">
+        <h1 class="mb-4">My Bookings</h1>
+
+        {% for booking in object_list %}
+            <div class="mb-4">
+                <!-- Blue shadow effect -->
+                <div class="position-absolute w-100 h-100 rounded-3" 
+                     style="background-color: blue; top: 10px; left: 10px; z-index: 0;"></div>
+                
+                <!-- Booking Details Card -->
+                <div class="card border-0 rounded-3 position-relative shadow" style="z-index: 1; background-color: #f8f9fa;">
+                    <div class="card-body">
+                        <h3>Trip Itinerary</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight No.</th>
+                                    <th>Departure</th>
+                                    <th>Departure Time</th>
+                                    <th>Arrival Time</th>
+                                    <th>Duration</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ticket in booking.tickets.all %}
+                                    <tr>
+                                        <td>{{ ticket.schedule.flight.flight_number }}</td>
+                                        <td>{{ ticket.schedule.flight.origin_city.name }} -> {{ ticket.schedule.flight.destination_city.name }}</td>
+                                        <td>{{ ticket.schedule.departure }}</td>
+                                        <td>{{ ticket.schedule.arrival }}</td>
+                                        <td>{{ ticket.schedule.duration }}</td>
+                                        <td>{{ ticket.cost }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                        <h3>Additional Items</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in booking.additional_items.all %}
+                                    <tr>
+                                        <td>{{ item.item.description }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.cost }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                        <p><strong>Passenger:</strong> {{ booking.passenger }}</p>
+                        <p><strong>Birth Date:</strong> {{ booking.passenger.birth_date }}</p>
+                        <p><strong>Gender:</strong> {{ booking.passenger.gender }}</p>
+                        <p><strong>Date Booked:</strong> {{ booking.booking_date }}</p>
+                        <p><strong>Total Cost:</strong> {{ booking.total_cost }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

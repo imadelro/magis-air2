@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="card">
+    <h5 class="card-header">Login</h5>
+    <div class="card-body">
+      <p class="card-text">
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" name="submit_form" class="btn custom-btn">Login</button>
+        </form>
+        <br>
+    <h2 class="text-center">
+    <a href="/accounts/signup/" class="btn custom-btn" role="button">Sign up here</a>
+    <a href="{% url 'password_reset' %}" class="btn custom-btn" role="button">Forgot Password</a>
+</h2>
+      </p>
+    </div>
+  </div>
+{% endblock content %}

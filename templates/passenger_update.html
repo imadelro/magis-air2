@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block content %}
+    <div class="card">
+        <h5 class="card-header">Update Profile</h5>
+        <div class="card-body">
+            <a href="{% url 'magisair:flight_schedule_search' %}" class="btn custom-btn" role="button">&larr; Return to Homepage</a>
+          <p class="card-text">
+            <form method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" name="submit_form" class="btn custom-btn">Submit</button>
+            </form>
+          </p>
+        </div>
+      </div>
+{% endblock content %}

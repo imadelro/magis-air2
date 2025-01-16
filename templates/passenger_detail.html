@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="card">
+        <h5 class="card-header">Passenger</h5>
+        <div class="card-body">
+            <a href="{% url 'magisair:flight_schedule_search' %}" class="btn custom-btn" role="button">&larr; Return to Homepage</a>
+          <p class="card-text">
+            <h2>Passenger: {{ passenger }}</h2>
+    <h2>Email: {{ passenger.email }}</h2>
+    {% if user.pk == passenger.user.pk %}
+        <h2 class="text-center">
+            {% comment %} <a button
+               type="submit"
+               class="btn custom-btn"
+               href="/passenger/update">Update Passenger</a> {% endcomment %}
+        </h2>
+    {% endif %}
+          </p>
+        </div>
+      </div>
+{% endblock content %}

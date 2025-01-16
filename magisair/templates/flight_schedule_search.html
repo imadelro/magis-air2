@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Flight Schedules
+{% endblock title %}
+
+{% block content %}
+<div class="card my-4">
+    <h5 class="card-header bg-secondary text-white">Search Flight Schedules</h5>
+    <div class="card-body">
+        <!-- Search Form -->
+        <form method="get" action="{% url 'magisair:flight_schedule_search' %}">
+            <div class="mb-3">
+                <label for="origin" class="form-label"><strong>Origin</strong></label>
+                <input type="text" name="origin" id="origin" class="form-control" value="{{ origin }}" placeholder="Enter origin city">
+            </div>
+
+            <div class="mb-3">
+                <label for="destination" class="form-label"><strong>Destination</strong></label>
+                <input type="text" name="destination" id="destination" class="form-control" value="{{ destination }}" placeholder="Enter destination city">
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label"><strong>Date</strong></label>
+                <input type="date" name="date" id="date" class="form-control" value="{{ date }}">
+            </div>
+
+            <button type="submit" class="btn custom-btn">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- Search Results -->
+{% if origin or destination or date %}
+<div class="card">
+    <h5 class="card-header bg-secondary text-white">Search Results</h5>
+    <div class="card-body">
+        {% if flight_schedules %}
+            <ul class="list-group">
+                {% for schedule in flight_schedules %}
+                    <li class="list-group-item">
+                        <strong>Flight Number:</strong> {{ schedule.flight.flight_number }}<br>
+                        <strong>Origin:</strong> {{ schedule.flight.origin_city.name }}<br>
+                        <strong>Destination:</strong> {{ schedule.flight.destination_city.name }}<br>
+                        <strong>Departure:</strong> {{ schedule.departure }}<br>
+                        <strong>Arrival:</strong> {{ schedule.arrival }}<br>
+                        <strong>Duration:</strong> {{ schedule.duration }}<br>
+                        <div class="mt-5 mb-3">
+                        <a class="btn custom-btn" role="button" href="#">Book Now</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-danger">No flight schedules match your search.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
